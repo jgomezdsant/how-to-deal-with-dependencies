@@ -1,6 +1,7 @@
 ﻿using CloudStorage.Core.Exceptions;
 using CloudStorage.Core.Model;
 using CloudStorage.Core.Model.DAL;
+using CloudStorage.Core.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -13,12 +14,12 @@ namespace CloudStorage.Core {
     public class PokemonService : IPokemonService
     {
         private readonly IPokemonRepository _repository;
-        private readonly AzureStorageManager _storage;
+        private readonly IAzureStorageManager _storage;
 
-        public PokemonService(IPokemonRepository repository, IWebHostEnvironment environment, IConfiguration configuration)
+        public PokemonService(IPokemonRepository repository, IWebHostEnvironment environment, IConfiguration configuration, IAzureStorageManager AzureStorageManager)
         {
             _repository = repository;
-            _storage = new AzureStorageManager(environment, configuration);
+            _storage = AzureStorageManager;
         }
 
         public async Task<PokemonQueryDAL> GetAsync(int id)

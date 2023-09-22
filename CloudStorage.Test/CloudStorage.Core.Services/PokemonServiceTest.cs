@@ -1,5 +1,6 @@
 ﻿using CloudStorage.Core;
 using CloudStorage.Core.Model.DAL;
+using CloudStorage.Core.Services;
 using CloudStorageAPI.Controllers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,7 @@ namespace CloudStorage.Test.CloudStorage.Core.Services
         private Mock<IConfigurationSection> _confConnectionStringSectionMock = new();
         private Mock<IConfigurationSection> _confContainerSectionMock = new();
         private Mock<IPokemonRepository> _repoMock = new();
+        private Mock<IAzureStorageManager> _storageManager = new();
 
         [SetUp]
         public void Setup()
@@ -32,7 +34,7 @@ namespace CloudStorage.Test.CloudStorage.Core.Services
             _confContainerSectionMock.Setup(c => c.Value).Returns("pokemon-container-test");
             _confMock.Setup(c => c.GetSection("Azure:StorageConnectionString")).Returns(_confConnectionStringSectionMock.Object);
             _confMock.Setup(c => c.GetSection("Azure:ContainerName")).Returns(_confContainerSectionMock.Object);
-            _service = new PokemonService(_repoMock.Object, _envMock.Object, _confMock.Object);
+            _service = new PokemonService(_repoMock.Object, _envMock.Object, _confMock.Object, _storageManager.Object);
         }
 
         [Test]

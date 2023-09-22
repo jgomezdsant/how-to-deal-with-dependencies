@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Http;
 using CloudStorage.Core.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using CloudStorage.Core.Services;
 
 namespace CloudStorage.Core
 {
-    public class AzureStorageManager
+    public class AzureStorageManager : IAzureStorageManager
     {
         private readonly BlobContainerClient _containerClient;
 
